@@ -1,0 +1,78 @@
+---
+title: 'Lab: Diff-in-Diff'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Part1: Exploring the data.
+
+Import the libraries needed for the analysis. 
+
+```{r cars}
+# Uncomment the following lines:
+library(data.table)
+library(tidyverse)
+#install.packages("lfe")
+library(lfe)
+data <- fread("data/search_data_ebay.csv")
+
+# Look at the names of the columns:
+names(data)
+head(data, 30)
+
+```
+
+
+#Part 2: Analyzing the data
+
+```{r}
+this_reg <- felm(#insert your code here, data)
+summary(this_reg)
+```
+
+```{r}
+this_reg_inter <- felm(#insert your code here, data)
+summary(this_reg_inter)
+```
+
+```{r}
+this_reg_inter_dmafe <- felm(#insert your code here, data)
+summary(this_reg_inter_dmafe)
+```
+
+
+```{r}
+this_reg_inter_dmadatefe <- felm(#insert your code here, data)
+summary(this_reg_inter_dmadatefe)
+```
+
+
+#Part 3 [Optional]: Plotting the data.
+
+```{r}
+library(ggplot2)
+require(lubridate) # package required to parse the character strings to datetime
+```
+
+
+```{r}
+agg_data <- data #insert your code here
+head(agg_data$date)
+typeof(agg_data$date) # The type of date variable is character. This will cause trouble when we plot them as R cannot recognize these as dates
+agg_data$date <- #insert your code here # So we parse the dates to datetime format 
+typeof(agg_data$date) # Check the data type
+agg_data$search_stays_on <-#insert your code here
+agg_data$treatment_period <- #insert your code here
+```
+
+```{r parallel trends}
+# Basic plot with the trend line
+agg_data %>% ggplot(aes(x = date, y = sum_rev, color = search_stays_on, shape = treatment_period)) + #insert your code here
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
